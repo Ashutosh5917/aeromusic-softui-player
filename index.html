@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AeroMusic - Neumorphic Audio System</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- HLS.js library for streaming gaama m3u8 URLs in standard browsers -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <!-- Main Neumorphic Application Window -->
+  <div class="app-window neumorphic-outer">
+    <!-- App Header -->
+    <header class="app-header">
+      <div class="logo-area">
+        <svg class="logo-icon" viewBox="0 0 24 24" width="26" height="26">
+          <defs>
+            <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff4e7e" />
+              <stop offset="100%" stop-color="#ff6c90" />
+            </linearGradient>
+          </defs>
+          <path fill="url(#logo-grad)" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+        </svg>
+        <span class="logo-text">Aero<span>Music</span></span>
+      </div>
+      <div class="header-status">
+        <span id="demo-badge" class="badge badge-demo">Sandbox Mode</span>
+        <button id="settings-btn" class="icon-btn neumorphic-btn" title="API Settings">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- 3-Pane Main Layout -->
+    <main class="main-layout">
+      
+      <!-- Panel 1: Search & Browse -->
+      <section class="panel search-panel neumorphic-card">
+        <div class="panel-header">
+          <h2>Search Music</h2>
+          <span class="engine-indicator">via API</span>
+        </div>
+        
+        <div class="search-form">
+          <div class="search-input-wrapper neumorphic-inset">
+            <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="search-input" placeholder="Search tracks..." autocomplete="off">
+            <button id="search-clear-btn" class="clear-btn">&times;</button>
+          </div>
+          
+          <div class="search-options">
+            <label for="engine-select">Filter:</label>
+            <div class="select-wrapper neumorphic-btn">
+              <select id="engine-select">
+                <option value="songs" selected>Songs</option>
+                <option value="videos">Videos</option>
+                <option value="albums">Albums</option>
+              </select>
+              <svg class="chevron-icon" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"></path></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured/Browse Slider (Demo) -->
+        <div class="featured-section">
+          <h3>Categories</h3>
+          <div class="featured-grid">
+            <div class="featured-card neumorphic-btn" data-query="Lofi Hip Hop">
+              <span>Lofi Chill</span>
+            </div>
+            <div class="featured-card neumorphic-btn" data-query="Synthwave">
+              <span>Synthwave</span>
+            </div>
+            <div class="featured-card neumorphic-btn" data-query="Classic Rock">
+              <span>Classic Rock</span>
+            </div>
+            <div class="featured-card neumorphic-btn" data-query="Jazz Cafe">
+              <span>Jazz Cafe</span>
+            </div>
+            <div class="featured-card neumorphic-btn" data-query="Pop Hits">
+              <span>Pop Hits</span>
+            </div>
+            <div class="featured-card neumorphic-btn" data-query="Focus Study">
+              <span>Focus Study</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scrollable Search Results -->
+        <div class="scrollable-content results-container">
+          <div class="results-title-header">
+            <h3>Search Results</h3>
+            <span id="results-count" class="results-count-badge">0 found</span>
+          </div>
+          <div id="search-results-list" class="songs-list">
+            <!-- Empty state -->
+            <div class="empty-state">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 8v4M12 16h.01"></path>
+              </svg>
+              <p>Type in the search field above to retrieve audio records.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Panel 2: Player & Visuals -->
+      <section class="panel player-panel neumorphic-card">
+        
+        <!-- Album Art and Rotation -->
+        <div class="album-container neumorphic-outer">
+          <div class="album-art-wrapper">
+            <img id="album-art" src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=300&h=300&fit=crop" alt="Album Cover">
+            <div class="vinyl-center"></div>
+          </div>
+          <div class="visualizer-overlay">
+            <canvas id="visualizer-canvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Track Info -->
+        <div class="track-details">
+          <h1 id="track-title">Not Playing</h1>
+          <p id="track-artist">Select a song to start listening</p>
+        </div>
+
+        <!-- Playback Time Sliders -->
+        <div class="progress-container">
+          <div class="time-display">
+            <span id="current-time">0:00</span>
+            <span id="duration-time">0:00</span>
+          </div>
+          <div class="progress-bar-wrapper neumorphic-inset">
+            <input type="range" id="progress-slider" min="0" max="100" value="0" step="0.1">
+            <div id="progress-fill" class="progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- Controls Area -->
+        <div class="player-controls">
+          <button id="favorite-btn" class="icon-btn control-btn neumorphic-btn" title="Add to Favorites">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </button>
+          
+          <button id="prev-btn" class="icon-btn control-btn neumorphic-btn" title="Previous Track">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <polygon points="19 20 9 12 19 4 19 20"></polygon>
+              <line x1="5" y1="4" x2="5" y2="20" stroke="currentColor" stroke-width="3"></line>
+            </svg>
+          </button>
+          
+          <button id="play-pause-btn" class="play-btn neumorphic-play" title="Play">
+            <svg id="play-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <svg id="pause-icon" class="hidden" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+              <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+            </svg>
+          </button>
+          
+          <button id="next-btn" class="icon-btn control-btn neumorphic-btn" title="Next Track">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <polygon points="5 4 15 12 5 20 5 4"></polygon>
+              <line x1="19" y1="4" x2="19" y2="20" stroke="currentColor" stroke-width="3"></line>
+            </svg>
+          </button>
+          
+          <button id="shuffle-btn" class="icon-btn control-btn neumorphic-btn" title="Shuffle Mode">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+              <polyline points="16 3 21 3 21 8"></polyline>
+              <line x1="4" y1="20" x2="21" y2="3"></line>
+              <polyline points="21 16 21 21 16 21"></polyline>
+              <line x1="15" y1="15" x2="21" y2="21"></line>
+              <line x1="4" y1="4" x2="9" y2="9"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Volume and Extra controls -->
+        <div class="player-utilities">
+          <div class="volume-control">
+            <button id="volume-btn" class="icon-btn neumorphic-btn-small" title="Mute/Unmute">
+              <svg id="volume-icon-high" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+              <svg id="volume-icon-mute" class="hidden" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+            </button>
+            <div class="volume-slider-wrapper neumorphic-inset">
+              <input type="range" id="volume-slider" min="0" max="100" value="80">
+              <div id="volume-fill" class="volume-fill"></div>
+            </div>
+          </div>
+          
+          <button id="loop-btn" class="icon-btn neumorphic-btn-small" title="Loop One">
+            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
+              <polyline points="17 1 21 5 17 9"></polyline>
+              <path d="M3 11V9a4 4 0 0 1 4-4h14M7 23 3 19 7 15"></path>
+              <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- Panel 3: Queue & Lyrics -->
+      <section class="panel details-panel neumorphic-card">
+        <div class="tabs-header neumorphic-inset-header">
+          <button id="tab-queue" class="tab-btn active">Play Queue</button>
+          <button id="tab-lyrics" class="tab-btn">Lyrics</button>
+        </div>
+
+        <!-- Scrollable Tab Content Container -->
+        <div class="scrollable-content tabs-container">
+          
+          <!-- Play Queue Section -->
+          <div id="queue-section" class="tab-content">
+            <div class="queue-header">
+              <span>Up Next</span>
+              <button id="clear-queue-btn" class="text-btn">Clear All</button>
+            </div>
+            <div id="queue-list" class="songs-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Lyrics Section -->
+          <div id="lyrics-section" class="tab-content hidden">
+            <div id="lyrics-content" class="lyrics-text neumorphic-inset-box">
+              <div class="empty-state">
+                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+                <p>Retrieved lyrics from YouTube Music will scroll here.</p>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Neumorphic Settings Modal -->
+  <div id="settings-modal" class="modal-overlay hidden">
+    <div class="modal-window neumorphic-outer">
+      <div class="modal-header">
+        <h3>Server Settings</h3>
+        <button id="close-modal-btn" class="icon-btn neumorphic-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="toggle-container">
+            <span class="toggle-label">Activate Sandbox Mode</span>
+            <input type="checkbox" id="demo-toggle" checked>
+            <span class="toggle-slider neumorphic-inset"></span>
+          </label>
+          <p class="help-text">Runs with high quality royalty-free demo tracks and local responses if your backend is currently offline.</p>
+        </div>
+        
+        <div class="form-group">
+          <label for="api-url-input">API Base URL</label>
+          <input type="text" id="api-url-input" class="neumorphic-inset" value="https://musicapi.x007.workers.dev" placeholder="http://127.0.0.1:8787">
+          <p class="help-text">Point this to your local or self-hosted instance of the Cloudflare Workers music-api.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="save-settings-btn" class="btn btn-primary neumorphic-btn">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Audio Element -->
+  <audio id="main-audio" crossorigin="anonymous"></audio>
+
+  <!-- JS Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
