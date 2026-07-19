@@ -2,7 +2,7 @@
 
 A premium **Tactile Neumorphic (Soft UI)** Music Application built with vanilla HTML5, CSS3, and JavaScript, integrated directly with **YouTube Music** via a multi-threaded Python backend stream proxy.
 
-![AeroMusic Interface]
+![AeroMusic Interface](screenshot.png)
 
 ## Features
 - **Tactile Neumorphic (Soft UI) Styling:** Sleek charcoal theme (`#1e222b`) with beveled physical deck key controls, rocker-switch panel tabs, and custom seek bar grooves.
